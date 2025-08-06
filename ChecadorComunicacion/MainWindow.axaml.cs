@@ -1,4 +1,6 @@
 using Avalonia.Controls;
+using ChecadorComunicacion.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChecadorComunicacion;
 
