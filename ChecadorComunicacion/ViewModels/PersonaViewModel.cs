@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ChecadorComunicacion.ViewModels;
 
-public class PersonaViewModel : INotifyPropertyChanged
+public class PersonaViewModel : ViewModelBase
 {
     private readonly PersonaService _service = new();
 
@@ -48,7 +48,7 @@ public class PersonaViewModel : INotifyPropertyChanged
             {
                 _personaSeleccionada = value;
                 OnPropertyChanged();
-                if (value != null)
+                if (value is not null)
                 {
                     Nombre = value.Nombre;
                     Apellido = value.Apellido;
