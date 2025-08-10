@@ -15,7 +15,6 @@ public partial class App : Application
     {
         AvaloniaXamlLoader.Load(this);
         _db.Database.Migrate();
-        
     }
 
     public override void OnFrameworkInitializationCompleted()
