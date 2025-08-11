@@ -8,52 +8,122 @@
         x:Class="ChecadorComunicacion.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Title="Hulla Pascal - Comunicación URN"
-        Icon="../Assets/logo_pascal_huella.png">
+        Icon="../Assets/icono-huella-uas.png"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        SystemDecorations="None">
 
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
 
-    <Grid RowDefinitions="Auto, Auto, *">
-        <Grid Grid.Row="1" ColumnDefinitions="Auto, *">
-            <Border Grid.Column="0" Width="100" Height="48">
-            </Border>
 
-            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="5" Margin="5" HorizontalAlignment="Center">
-                <ListBox ItemsSource="{Binding Items}"
-                         SelectedItem="{Binding SelectedListItem}"
-                         Background="Transparent">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
+    <Grid>
+        <SplitView IsPaneOpen="True"
+                   DisplayMode="Inline"
+                   OpenPaneLength="300"
+                   PaneBackground="{StaticResource PrimaryBlue}">
 
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type vm:ListItemTemplate}">
-                            <StackPanel Spacing="15" Orientation="Horizontal">
-                                <PathIcon Data="{Binding ListItemIcon}"
-                                          Width="24" Height="24" />
-                                <TextBlock Text="{Binding Label}"
-                                           VerticalAlignment="Center" />
+            <SplitView.Pane>
+                <Grid RowDefinitions="Auto, *">
+
+                    <Border Grid.Row="0" Padding="24,20" Background="{StaticResource DarkBlue}">
+                        <StackPanel Orientation="Horizontal" Spacing="16">
+                            <Border Background="White"
+                                    CornerRadius="8"
+                                    Padding="8"
+                                    VerticalAlignment="Center">
+                                <Image Source="../Assets/logo_pascal_huella.png"
+                                       Width="32" Height="32" />
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Hulla Pascal"
+                                           FontWeight="Bold"
+                                           FontSize="18"
+                                           Foreground="{StaticResource TextOnBlue}" />
+                                <TextBlock Text="Comunicación URN"
+                                           Classes="Subtitle" />
                             </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                        </StackPanel>
+                    </Border>
 
-                    <ListBox.ItemContainerTheme>
-                        <ControlTheme TargetType="ListBoxItem">
-                            <Setter Property="Padding" Value="8,6" />
-                            <Setter Property="Margin" Value="0,2" />
-                            <Setter Property="CornerRadius" Value="4" />
-                        </ControlTheme>
-                    </ListBox.ItemContainerTheme>
-                </ListBox>
-            </StackPanel>
-        </Grid>
+                    <ScrollViewer Grid.Row="1" Padding="16,24,16,0">
+                        <ListBox ItemsSource="{Binding Items}"
+                                 SelectedItem="{Binding SelectedListItem}"
+                                 Background="Transparent"
+                                 BorderThickness="0">
 
-        <Border Grid.Row="2" Margin="5" Background="#2d2d2d">
-            <TransitioningContentControl Content="{Binding CurrentPage}" />
-        </Border>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:ListItemTemplate}">
+                                    <StackPanel Spacing="16" Orientation="Horizontal">
+                                        <PathIcon Data="{Binding ListItemIcon}"
+                                                  Width="22" Height="22"
+                                                  Foreground="{StaticResource TextOnBlue}" />
+                                        <TextBlock Text="{Binding Label}"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{StaticResource TextOnBlue}"
+                                                   FontSize="15"
+                                                   FontWeight="Medium" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                            <ListBox.ItemContainerTheme>
+                                <StaticResource ResourceKey="NavigationButtonTheme" />
+                            </ListBox.ItemContainerTheme>
+                        </ListBox>
+                    </ScrollViewer>
+                </Grid>
+            </SplitView.Pane>
+
+            <SplitView.Content>
+                <Grid RowDefinitions="Auto, *">
+
+                    <Border Grid.Row="0" Classes="TopBar">
+                        <Grid ColumnDefinitions="Auto, *, Auto, Auto">
+
+                            <Button Grid.Column="0"
+                                    Theme="{StaticResource TopBarButtonTheme}"
+                                    Margin="16,0,0,0"
+                                    VerticalAlignment="Center">
+                                <PathIcon Data="{StaticResource LineHorizontalRegular}"
+                                          Width="20" Height="20"
+                                          Foreground="{StaticResource SecondaryText}" />
+                            </Button>
+
+                            <Button Grid.Column="2"
+                                    Click="MinimizeApp_Click"
+                                    ToolTip.Tip="Minimizar"
+                                    Margin="4,0">
+                                <PathIcon Data="{StaticResource MinimizeRegular}" />
+                            </Button>
+
+                            <Button Grid.Column="3"
+                                    Click="CloseApp_Click"
+                                    ToolTip.Tip="Cerrar"
+                                    Margin="4,0,16,0">
+                                <PathIcon Data="{StaticResource CloseIcon}"
+                                          Foreground="#dc2626" />
+                            </Button>
+
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                            Margin="0"
+                            Background="{StaticResource BackgroundGray}">
+                        <ScrollViewer>
+                            <Border Classes="MainCard"
+                                    Margin="24">
+                                <TransitioningContentControl Content="{Binding CurrentPage}"
+                                                             Margin="32,24" />
+                            </Border>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
     </Grid>
 
 </Window>
