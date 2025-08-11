@@ -33,10 +33,8 @@ public class PersonaService
         var entidad = _context.Personas.FirstOrDefault(p => p.Id == persona.Id)
                       ?? _context.Personas.Find(persona.Id);
 
-        if (entidad != null)
-        {
-            _context.Personas.Remove(entidad);
-            _context.SaveChanges();
-        }
+        if (entidad == null) return;
+        _context.Personas.Remove(entidad);
+        _context.SaveChanges();
     }
 }
