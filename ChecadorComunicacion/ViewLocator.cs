@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using ChecadorComunicacion.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
@@ -24,10 +25,7 @@ public class ViewLocator : IDataTemplate
         return new TextBlock { Text = $"Not Found: {name}" };
     }
 
-    public bool Match(object? data)
-    {
-        return data is ObservableObject;
-    }
+    public bool Match(object? data) => data is ViewModelBase or DialogViewModel;
 
     private void RegisterViewFactory<TViewModel, TView>()
         where TViewModel : class
