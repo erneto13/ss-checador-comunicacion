@@ -1,0 +1,52 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             MinWidth="300"
+             xmlns:vm="clr-namespace:ChecadorComunicacion.ViewModels"
+             x:DataType="vm:ConfirmDialogViewModel"
+             Foreground="Red "
+             Background="Transparent"
+             x:Class="ChecadorComunicacion.Views.ConfirmDialogView">
+    <Design.DataContext>
+        <vm:ConfirmDialogViewModel />
+    </Design.DataContext>
+
+    <Border
+        Background="{DynamicResource CardBackground}"
+        CornerRadius="20" ClipToBounds="True" Margin="10">
+        <StackPanel>
+
+            <!-- Title -->
+            <Border Background="{DynamicResource CardBackground}">
+                <TextBlock Text="{Binding Title}"
+                           Padding="10"
+                           FontSize="18"
+                           FontWeight="Bold">
+
+                </TextBlock>
+            </Border>
+
+            <Border Padding="20">
+                <!-- Description -->
+                <StackPanel Spacing="20">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Classes="Icon" FontFamily="{DynamicResource SegoeFluentIconsFont}"
+                               Content="{Binding IconText}" />
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Message}" />
+                    </StackPanel>
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                        <Button Content="{Binding CancelText}" Command="{Binding CancelCommand}" />
+
+                        <Button Content="{Binding ConfirmText}" Command="{Binding ConfirmCommand}" />
+                    </StackPanel>
+                </StackPanel>
+
+
+            </Border>
+        </StackPanel>
+    </Border>
+</UserControl>
