@@ -16,6 +16,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private ListItemTemplate? _selectedListItem;
 
+    [ObservableProperty] private DialogViewModel _dialogViewModel = new ChecadorViewModel { IsDialogOpen = true };
+
     partial void OnSelectedListItemChanged(ListItemTemplate? value)
     {
         if (value is null) return;

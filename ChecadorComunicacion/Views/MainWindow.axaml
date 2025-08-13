@@ -7,6 +7,8 @@
         WindowStartupLocation="CenterOwner"
         x:Class="ChecadorComunicacion.MainWindow"
         x:DataType="vm:MainWindowViewModel"
+        d:DesignWidth="1100"
+        d:DesignHeight="800"
         Title="Hulla Pascal - Comunicación URN"
         Icon="../Assets/icono-huella-uas.png"
         ExtendClientAreaToDecorationsHint="True"
@@ -18,35 +20,27 @@
         <vm:MainWindowViewModel />
     </Window.DataContext>
 
-
     <Grid>
-        <SplitView IsPaneOpen="True"
+        <SplitView IsPaneOpen="{Binding IsPaneOpen}"
                    DisplayMode="Inline"
                    OpenPaneLength="300"
-                   PaneBackground="{StaticResource PrimaryBlue}">
+                   PaneBackground="{StaticResource ElegantBlue}">
 
             <SplitView.Pane>
-                <Grid RowDefinitions="Auto, *">
+                <Grid RowDefinitions="Auto, *, Auto, Auto">
 
-                    <Border Grid.Row="0" Padding="24,20" Background="{StaticResource DarkBlue}">
-                        <StackPanel Orientation="Horizontal" Spacing="16">
-                            <Border Background="White"
-                                    CornerRadius="8"
-                                    Padding="8"
-                                    VerticalAlignment="Center">
-                                <Image Source="../Assets/logo_pascal_huella.png"
-                                       Width="32" Height="32" />
+                    <Border Grid.Row="0" Background="{StaticResource ElegantBlue}">
+                        <StackPanel Orientation="Horizontal">
+                            <Border VerticalAlignment="Center">
+                                <Image Source="../Assets/banner_logo_sifa.png"
+                                       Width="422" Height="200" Margin="-75, -30, 0, -50" />
                             </Border>
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Hulla Pascal"
-                                           FontWeight="Bold"
-                                           FontSize="18"
-                                           Foreground="{StaticResource TextOnBlue}" />
-                                <TextBlock Text="Comunicación URN"
-                                           Classes="Subtitle" />
-                            </StackPanel>
                         </StackPanel>
                     </Border>
+
+                    <Border Grid.Row="0" Background="{StaticResource PrimaryBlue}"
+                            Height="1" Width="280" Margin="0,-5"
+                            VerticalAlignment="Bottom" />
 
                     <ScrollViewer Grid.Row="1" Padding="16,24,16,0">
                         <ListBox ItemsSource="{Binding Items}"
@@ -59,10 +53,10 @@
                                     <StackPanel Spacing="16" Orientation="Horizontal">
                                         <PathIcon Data="{Binding ListItemIcon}"
                                                   Width="22" Height="22"
-                                                  Foreground="{StaticResource TextOnBlue}" />
+                                                  Foreground="{StaticResource PrimaryForeground}" />
                                         <TextBlock Text="{Binding Label}"
                                                    VerticalAlignment="Center"
-                                                   Foreground="{StaticResource TextOnBlue}"
+                                                   Foreground="{StaticResource PrimaryForeground}"
                                                    FontSize="15"
                                                    FontWeight="Medium" />
                                     </StackPanel>
@@ -74,6 +68,47 @@
                             </ListBox.ItemContainerTheme>
                         </ListBox>
                     </ScrollViewer>
+
+                    <Border Grid.Row="2"
+                            Margin="16,80"
+                            Background="{StaticResource PrimaryBlue}"
+                            CornerRadius="12"
+                            Padding="16,12">
+                        <StackPanel Spacing="8">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <PathIcon
+                                    Data="{StaticResource Calendar}"
+                                    Width="16" Height="16"
+                                    Foreground="{StaticResource TextOnBlue}" />
+                                <TextBlock Text="Calendario"
+                                           FontSize="14"
+                                           FontWeight="Medium"
+                                           Foreground="{StaticResource TextOnBlue}" />
+                            </StackPanel>
+
+                            <Border CornerRadius="8" ClipToBounds="False">
+                                <Image Source="../Assets/calendario.jpg"
+                                       Width="246"
+                                       Height="340"
+                                       Stretch="UniformToFill" />
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Row="3"
+                            Margin="16,0,16,16">
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Desarrollado por"
+                                       FontSize="11"
+                                       Foreground="#E1E1E1"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="Ernesto Amaral Espinoza"
+                                       FontSize="13"
+                                       FontWeight="Thin"
+                                       Foreground="{StaticResource TextOnBlue}"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
                 </Grid>
             </SplitView.Pane>
 
@@ -86,12 +121,13 @@
                             <Button Grid.Column="0"
                                     Theme="{StaticResource TopBarButtonTheme}"
                                     Margin="16,0,0,0"
-                                    VerticalAlignment="Center">
+                                    VerticalAlignment="Center"
+                                    Command="{Binding TriggerPaneCommand }">
                                 <PathIcon Data="{StaticResource LineHorizontalRegular}"
                                           Width="20" Height="20"
                                           Foreground="{StaticResource SecondaryText}" />
-                            </Button>
 
+                            </Button>
                             <Button Grid.Column="2"
                                     Click="MinimizeApp_Click"
                                     ToolTip.Tip="Minimizar"
@@ -111,8 +147,7 @@
                     </Border>
 
                     <Border Grid.Row="1"
-                            Margin="0"
-                            Background="{StaticResource BackgroundGray}">
+                            Margin="0">
                         <ScrollViewer>
                             <Border Classes="MainCard"
                                     Margin="24">
@@ -124,6 +159,14 @@
                 </Grid>
             </SplitView.Content>
         </SplitView>
+
+        <!-- <Grid IsVisible="{Binding DialogViewModel.IsDialogOpen}"> -->
+        <!--     <Border Background="Black" Opacity="0.5" /> -->
+        <!--     <ContentControl -->
+        <!--         Content="{Binding DialogViewModel}" -->
+        <!--         HorizontalAlignment="Center" -->
+        <!--         VerticalAlignment="Center" /> -->
+        <!-- </Grid> -->
     </Grid>
 
 </Window>
