@@ -10,16 +10,23 @@
     </Application.DataTemplates>
 
     <Application.Resources>
-        <SolidColorBrush x:Key="PrimaryBlue" Color="#1e3a8a" />
-        <SolidColorBrush x:Key="SecondaryBlue" Color="#3b82f6" />
-        <SolidColorBrush x:Key="LightBlue" Color="#dbeafe" />
-        <SolidColorBrush x:Key="AccentBlue" Color="#1d4ed8" />
-        <SolidColorBrush x:Key="DarkBlue" Color="#1e40af" />
-        <SolidColorBrush x:Key="HoverBlue" Color="#2563eb" />
-        <SolidColorBrush x:Key="TextOnBlue" Color="#f8fafc" />
-        <SolidColorBrush x:Key="SecondaryText" Color="#64748b" />
-        <SolidColorBrush x:Key="BackgroundGray" Color="#f8fafc" />
-        <SolidColorBrush x:Key="CardBackground" Color="#ffffff" />
+        <FontFamily x:Key="SegoeFluentIconsFont">
+            avares://ChecadorComunicacion/Assets/Fonts/SegoeIcons.ttf#Segoe Fluent Icons
+        </FontFamily>
+
+        <SolidColorBrush x:Key="PrimaryBlue" Color="#043356" />
+        <SolidColorBrush x:Key="SecondaryBlue" Color="#0c7fda" />
+        <SolidColorBrush x:Key="LightBlue" Color="#E3F2F9" />
+        <SolidColorBrush x:Key="AccentBlue" Color="#046B99" />
+        <SolidColorBrush x:Key="DarkBlue" Color="#021F2D" />
+        <SolidColorBrush x:Key="ElegantBlack" Color="#131312" />
+        <SolidColorBrush x:Key="ElegantBlue" Color="#023E8A" />
+        <SolidColorBrush x:Key="HoverBlue" Color="#e9f5fe" />
+        <SolidColorBrush x:Key="TextOnBlue" Color="#F8FAFC" />
+        <SolidColorBrush x:Key="SecondaryText" Color="#64748B" />
+        <SolidColorBrush x:Key="BackgroundGray" Color="#F8FAFC" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="PrimaryForeground" Color="#F8FAFC" />
 
         <ControlTheme x:Key="NavigationButtonTheme" TargetType="ListBoxItem">
             <Setter Property="Padding" Value="16,12" />
@@ -52,7 +59,7 @@
             </Style>
 
             <Style Selector="^:selected:pointerover">
-                <Setter Property="Background" Value="{StaticResource AccentBlue}" />
+                <Setter Property="Background" Value="{StaticResource SecondaryBlue}" />
             </Style>
         </ControlTheme>
 
@@ -122,5 +129,14 @@
             <Setter Property="Height" Value="64" />
             <Setter Property="BoxShadow" Value="0 1 3 0 #0000001a" />
         </Style>
+
+        <Style Selector="Label.Icon">
+            <Setter Property="FontFamily" Value="{StaticResource SegoeFluentIconsFont}" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="{StaticResource PrimaryBlue}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
     </Application.Styles>
 </Application>
