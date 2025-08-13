@@ -1,6 +1,6 @@
 ﻿namespace ChecadorComunicacion.ViewModels;
 
-public class ChecadorViewModel : ViewModelBase
+public class ChecadorViewModel : DialogViewModel
 {
     
 }

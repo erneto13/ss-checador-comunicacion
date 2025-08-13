@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ChecadorComunicacion.Views.ChecadorView">
-    <Grid Background="#F3F3F3">
-        
+    <Grid>
+        <TextBlock Margin="20" Text="Checador Vista"></TextBlock>
     </Grid>
 </UserControl>
