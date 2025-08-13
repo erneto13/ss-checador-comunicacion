@@ -8,6 +8,7 @@ using Avalonia.Platform.Storage;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChecadorComunicacion.ViewModels;
 
@@ -277,12 +278,12 @@ public class PersonaViewModel : ViewModelBase
         }
     }
 
-    public void GenerarHuellaAleatoria()
+    private void GenerarHuellaAleatoria()
     {
         try
         {
             var random = new Random();
-            var huellaData = new byte[256]; 
+            var huellaData = new byte[256];
             random.NextBytes(huellaData);
 
             for (int i = 0; i < huellaData.Length; i += 8)
@@ -299,6 +300,8 @@ public class PersonaViewModel : ViewModelBase
             }
 
             Huella = huellaData;
+            // TODO: devuelve un System.Bite[]
+            Console.WriteLine(Huella);
         }
         catch (Exception ex)
         {
