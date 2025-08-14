@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChecadorComunicacion.ViewModels;
 
-public class PersonaViewModel : ViewModelBase
+public class PersonasViewModel : ViewModelBase
 {
     private readonly PersonaService _service = new();
 
@@ -25,7 +25,7 @@ public class PersonaViewModel : ViewModelBase
     public ICommand SeleccionarImagenCommand { get; }
     public ICommand GenerarHuellaCommand { get; }
 
-    public PersonaViewModel()
+    public PersonasViewModel()
     {
         AgregarCommand = new RelayCommand(Agregar);
         ActualizarCommand = new RelayCommand(Actualizar);
@@ -283,7 +283,9 @@ public class PersonaViewModel : ViewModelBase
         try
         {
             var random = new Random();
+            Console.WriteLine(random);
             var huellaData = new byte[256];
+            Console.WriteLine(huellaData);
             random.NextBytes(huellaData);
 
             for (int i = 0; i < huellaData.Length; i += 8)
@@ -301,7 +303,7 @@ public class PersonaViewModel : ViewModelBase
 
             Huella = huellaData;
             // TODO: devuelve un System.Bite[]
-            Console.WriteLine(Huella);
+            Console.WriteLine(Huella.Length);
         }
         catch (Exception ex)
         {

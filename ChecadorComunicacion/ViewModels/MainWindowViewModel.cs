@@ -29,7 +29,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public ObservableCollection<ListItemTemplate> Items { get; } = new()
     {
         new ListItemTemplate(typeof(ChecadorViewModel), "FingerprintRegular"),
-        new ListItemTemplate(typeof(PersonaViewModel), "PeopleTeamAddRegular"),
+        new ListItemTemplate(typeof(PersonasViewModel), "PeopleTeamAddRegular"),
         new ListItemTemplate(typeof(ReportesViewModel), "ReportDocumentRegular"),
     };
 
