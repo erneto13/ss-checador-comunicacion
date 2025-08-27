@@ -1,4 +1,5 @@
 ﻿using System;
+using ChecadorComunicacion.Models;
 
 namespace ChecadorComunicacion.Services;
 
