@@ -1,4 +1,5 @@
-﻿using ChecadorComunicacion.Services;
+﻿using ChecadorComunicacion.Models;
+using ChecadorComunicacion.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChecadorComunicacion.Data;
@@ -6,6 +7,7 @@ namespace ChecadorComunicacion.Data;
 public class AppDbContext : DbContext
 {
     public DbSet<Persona> Personas { get; set; }
+    public DbSet<Checador> Checadores { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
