@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ChecadorComunicacion.Data;
+using ChecadorComunicacion.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChecadorComunicacion.Services;
 
 public class PersonaService
 {
-    private readonly AppDbContext _context = new AppDbContext();
+    private readonly AppDbContext _context = new();
 
     public List<Persona> ObtenerPersonas()
     {

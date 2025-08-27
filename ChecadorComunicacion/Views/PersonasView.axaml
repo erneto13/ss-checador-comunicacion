@@ -1,0 +1,198 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
+             xmlns:viewModels="clr-namespace:ChecadorComunicacion.ViewModels"
+             x:DataType="viewModels:PersonasViewModel"
+             x:Class="ChecadorComunicacion.Views.PersonasView">
+
+    <UserControl.DataContext>
+        <viewModels:PersonasViewModel />
+    </UserControl.DataContext>
+
+    <ScrollViewer>
+        <StackPanel Margin="40" Spacing="30">
+
+            <TextBlock Text="Gestión de Personas"
+                       FontSize="32"
+                       FontWeight="Light"
+                       Foreground="#2C3E50"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20" />
+
+            <Border Background="White"
+                    CornerRadius="12"
+                    BoxShadow="0 2 20 0 #10000000"
+                    Padding="30">
+
+                <StackPanel Spacing="25">
+                    <TextBlock Text="Información Personal"
+                               FontSize="18"
+                               FontWeight="Medium"
+                               Foreground="#34495E"
+                               Margin="0,0,0,10" />
+
+                    <Grid ColumnDefinitions="200, *, 200, *"
+                          RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                          ColumnSpacing="25"
+                          RowSpacing="20">
+
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Text="Nombre"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Medium"
+                                   Foreground="#34495E" />
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                 Watermark="Ingresa el nombre"
+                                 Text="{Binding Nombre, Mode=TwoWay}"
+                                 Padding="12"
+                                 BorderBrush="#E0E6ED"
+                                 BorderThickness="1"
+                                 CornerRadius="6"
+                                 Background="White" />
+
+                        <TextBlock Grid.Row="0" Grid.Column="2"
+                                   Text="Apellido"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Medium"
+                                   Foreground="#34495E" />
+                        <TextBox Grid.Row="0" Grid.Column="3"
+                                 Watermark="Ingresa el apellido"
+                                 Text="{Binding Apellido, Mode=TwoWay}"
+                                 Padding="12"
+                                 BorderBrush="#E0E6ED"
+                                 BorderThickness="1"
+                                 CornerRadius="6"
+                                 Background="White" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Text="Matrícula"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Medium"
+                                   Foreground="#34495E" />
+                        <TextBox Grid.Row="1" Grid.Column="1"
+                                 Watermark="Ingresa la matrícula"
+                                 Text="{Binding Matricula, Mode=TwoWay}"
+                                 Padding="12"
+                                 BorderBrush="#E0E6ED"
+                                 BorderThickness="1"
+                                 CornerRadius="6"
+                                 Background="White" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="2"
+                                   Text="Tipo de persona"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Medium"
+                                   Foreground="#34495E" />
+                        <ComboBox Grid.Row="1" Grid.Column="3"
+                                  SelectedItem="{Binding TipoPersona, Mode=TwoWay}"
+                                  Padding="12"
+                                  BorderBrush="#E0E6ED"
+                                  BorderThickness="1"
+                                  CornerRadius="6"
+                                  Background="White">
+                            <x:String>Brigadista</x:String>
+                            <x:String>Empleado/a</x:String>
+                            <x:String>Encargado</x:String>
+                        </ComboBox>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Text="Huella Dactilar"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Medium"
+                                   Foreground="#34495E" />
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Text="Fotografía"
+                                   VerticalAlignment="Top"
+                                   FontWeight="Medium"
+                                   Foreground="#34495E"
+                                   Margin="0,15,0,0" />
+                        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+                                    Orientation="Horizontal" Spacing="20">
+                            <Border BorderBrush="#E0E6ED"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Width="100"
+                                    Height="100"
+                                    Background="White">
+                                <Grid>
+                                    <Border Background="#F8F9FA">
+                                        <TextBlock Text="📷"
+                                                   FontSize="24"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#BDC3C7" />
+                                    </Border>
+                                    <Image Source="{Binding FotoBase64}"
+                                           Stretch="UniformToFill"
+                                           IsVisible="{Binding TieneFoto}" />
+                                </Grid>
+                            </Border>
+                            <StackPanel Spacing="10" VerticalAlignment="Center">
+                                <Button Content="Seleccionar Imagen"
+                                        Command="{Binding SeleccionarImagenCommand}"
+                                        Background="#9B59B6"
+                                        Foreground="White"
+                                        Padding="15,10"
+                                        CornerRadius="6"
+                                        BorderThickness="0"
+                                        FontWeight="Medium"
+                                        MinWidth="150" />
+                                <TextBlock Text="{Binding TieneFoto, StringFormat='Estado: {0}'}"
+                                           FontSize="12"
+                                           Foreground="#7F8C8D" />
+                                <TextBlock Text="{Binding Foto.Length, StringFormat='Tamaño: {0} bytes'}"
+                                           FontSize="12"
+                                           Foreground="#7F8C8D"
+                                           IsVisible="{Binding TieneFoto}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="15"
+                                Margin="0,20,0,0">
+                        <Button Content="Agregar"
+                                Width="120"
+                                Command="{Binding AgregarCommand}"
+                                Background="#27AE60"
+                                Foreground="White"
+                                Padding="0,12"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                FontWeight="Medium" />
+                        <Button Content="Actualizar"
+                                Width="120"
+                                Command="{Binding ActualizarCommand}"
+                                Background="#F39C12"
+                                Foreground="White"
+                                Padding="0,12"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                FontWeight="Medium" />
+                        <Button Content="Eliminar"
+                                Width="120"
+                                Command="{Binding EliminarCommand}"
+                                Background="#E74C3C"
+                                Foreground="White"
+                                Padding="0,12"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                FontWeight="Medium" />
+                        <Button Content="Limpiar"
+                                Width="120"
+                                Command="{Binding LimpiarCommand}"
+                                Background="#95A5A6"
+                                Foreground="White"
+                                Padding="0,12"
+                                CornerRadius="6"
+                                BorderThickness="0"
+                                FontWeight="Medium" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

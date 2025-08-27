@@ -8,6 +8,7 @@ using Avalonia.Platform.Storage;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using ChecadorComunicacion.Models;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChecadorComunicacion.ViewModels;
@@ -23,7 +24,7 @@ public class PersonasViewModel : ViewModelBase
     public ICommand EliminarCommand { get; }
     public ICommand LimpiarCommand { get; }
     public ICommand SeleccionarImagenCommand { get; }
-    public ICommand GenerarHuellaCommand { get; }
+    //public ICommand GenerarHuellaCommand { get; }
 
     public PersonasViewModel()
     {
@@ -32,7 +33,7 @@ public class PersonasViewModel : ViewModelBase
         EliminarCommand = new RelayCommand(Eliminar);
         LimpiarCommand = new RelayCommand(Limpiar);
         SeleccionarImagenCommand = new RelayCommand(async () => await SeleccionarImagen());
-        GenerarHuellaCommand = new RelayCommand(GenerarHuellaAleatoria);
+        //GenerarHuellaCommand = new RelayCommand(GenerarHuellaAleatoria);
 
         CargarPersonas();
         Limpiar();
@@ -55,7 +56,7 @@ public class PersonasViewModel : ViewModelBase
                     Apellido = value.Apellido;
                     Matricula = value.Matricula;
                     TipoPersona = value.TipoPersona;
-                    Huella = value.Huella;
+                    //Huella = value.Huella;
                     Foto = value.Foto;
                 }
                 else
@@ -173,7 +174,7 @@ public class PersonasViewModel : ViewModelBase
         Apellido = string.Empty;
         Matricula = string.Empty;
         TipoPersona = string.Empty;
-        Huella = null;
+        //Huella = null;
         Foto = null;
         PersonaSeleccionada = null;
     }
@@ -183,7 +184,7 @@ public class PersonasViewModel : ViewModelBase
         !string.IsNullOrWhiteSpace(Apellido) &&
         !string.IsNullOrWhiteSpace(Matricula) &&
         !string.IsNullOrWhiteSpace(TipoPersona) &&
-        Huella != null &&
+        //Huella != null &&
         Foto != null;
 
     public void Agregar()
@@ -196,7 +197,7 @@ public class PersonasViewModel : ViewModelBase
             Apellido = Apellido.Trim(),
             Matricula = Matricula.Trim(),
             TipoPersona = TipoPersona.Trim(),
-            Huella = Huella,
+            //Huella = Huella,
             Foto = Foto
         };
 
@@ -213,7 +214,7 @@ public class PersonasViewModel : ViewModelBase
         PersonaSeleccionada.Apellido = Apellido.Trim();
         PersonaSeleccionada.Matricula = Matricula.Trim();
         PersonaSeleccionada.TipoPersona = TipoPersona.Trim();
-        PersonaSeleccionada.Huella = Huella;
+        //PersonaSeleccionada.Huella = Huella;
         PersonaSeleccionada.Foto = Foto;
 
         _service.ActualizarPersona(PersonaSeleccionada);
@@ -278,36 +279,41 @@ public class PersonasViewModel : ViewModelBase
         }
     }
 
-    private void GenerarHuellaAleatoria()
-    {
-        try
-        {
-            var random = new Random();
-            Console.WriteLine(random);
-            var huellaData = new byte[256];
-            Console.WriteLine(huellaData);
-            random.NextBytes(huellaData);
-
-            for (int i = 0; i < huellaData.Length; i += 8)
-            {
-                if (i + 8 < huellaData.Length)
-                {
-                    huellaData[i] = (byte)(random.Next(0, 255));
-                    huellaData[i + 1] = (byte)(random.Next(0, 255));
-                    huellaData[i + 2] = (byte)(random.Next(0, 200));
-                    huellaData[i + 3] = (byte)(random.Next(0, 200));
-                    huellaData[i + 4] = (byte)(random.Next(0, 360));
-                    huellaData[i + 5] = (byte)(random.Next(50, 100));
-                }
-            }
-
-            Huella = huellaData;
-            // TODO: devuelve un System.Bite[]
-            Console.WriteLine(Huella.Length);
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Error al generar huella: {ex.Message}");
-        }
-    }
+    /*
+     * @deprecated
+     * Este método genera una huella digital aleatoria para propósitos de prueba.
+     * En un entorno de producción, las huellas digitales deben ser capturadas
+     */
+    // private void GenerarHuellaAleatoria()
+    // {
+    //     try
+    //     {
+    //         var random = new Random();
+    //         Console.WriteLine(random);
+    //         var huellaData = new byte[256];
+    //         Console.WriteLine(huellaData);
+    //         random.NextBytes(huellaData);
+    //
+    //         for (int i = 0; i < huellaData.Length; i += 8)
+    //         {
+    //             if (i + 8 < huellaData.Length)
+    //             {
+    //                 huellaData[i] = (byte)(random.Next(0, 255));
+    //                 huellaData[i + 1] = (byte)(random.Next(0, 255));
+    //                 huellaData[i + 2] = (byte)(random.Next(0, 200));
+    //                 huellaData[i + 3] = (byte)(random.Next(0, 200));
+    //                 huellaData[i + 4] = (byte)(random.Next(0, 360));
+    //                 huellaData[i + 5] = (byte)(random.Next(50, 100));
+    //             }
+    //         }
+    //
+    //         Huella = huellaData;
+    //         // TODO: devuelve un System.Bite[]
+    //         Console.WriteLine(Huella.Length);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         System.Diagnostics.Debug.WriteLine($"Error al generar huella: {ex.Message}");
+    //     }
+    // }
 }
