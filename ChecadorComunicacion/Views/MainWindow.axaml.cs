@@ -1,6 +1,8 @@
 using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using ChecadorComunicacion.ViewModels;
 using FluentAvalonia.UI.Controls;
 
@@ -8,6 +10,8 @@ namespace ChecadorComunicacion;
 
 public partial class MainWindow : Window
 {
+    private double _zoom = 1.0;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -46,4 +50,38 @@ public partial class MainWindow : Window
     {
         WindowState = WindowState.Minimized;
     }
+
+    private void OpenImageModal(object? sender, PointerPressedEventArgs e)
+    {
+        _zoom = 1.0;
+
+        if (FullImage.RenderTransform is ScaleTransform scale)
+        {
+            scale.ScaleX = _zoom;
+            scale.ScaleY = _zoom;
+        }
+
+        ImageOverlay.IsVisible = true;
+    }
+
+    private void OnZoomImage(object? sender, PointerWheelEventArgs e)
+    {
+        if (FullImage.RenderTransform is ScaleTransform scale)
+        {
+            if (e.Delta.Y > 0)
+                _zoom += 0.1;
+            else if (e.Delta.Y < 0 && _zoom > 0.2)
+                _zoom -= 0.1;
+
+            scale.ScaleX = _zoom;
+            scale.ScaleY = _zoom;
+        }
+    }
+
+    private void CloseImageModal(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.Source is Grid)
+            ImageOverlay.IsVisible = false;
+    }
+
 }

@@ -7,8 +7,8 @@
         WindowStartupLocation="CenterOwner"
         x:Class="ChecadorComunicacion.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        d:DesignWidth="1100"
-        d:DesignHeight="800"
+        d:DesignWidth="1400"
+        d:DesignHeight="1000"
         Title="Hulla Pascal - Comunicación URN"
         Icon="../Assets/icono-huella-uas.png"
         ExtendClientAreaToDecorationsHint="True"
@@ -90,7 +90,9 @@
                                 <Image Source="../Assets/calendario.jpg"
                                        Width="246"
                                        Height="340"
-                                       Stretch="UniformToFill" />
+                                       Stretch="UniformToFill"
+                                       Cursor="Hand"
+                                       PointerPressed="OpenImageModal" />
                             </Border>
                         </StackPanel>
                     </Border>
@@ -167,6 +169,31 @@
         <!--         HorizontalAlignment="Center" -->
         <!--         VerticalAlignment="Center" /> -->
         <!-- </Grid> -->
+        
+        <!-- lightbox para el calendario -->
+        <Grid x:Name="ImageOverlay"
+              Background="#AA000000"
+              IsVisible="False"
+              ZIndex="99"
+              PointerPressed="CloseImageModal"> 
+            <Border HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="White"
+                    Padding="8"
+                    CornerRadius="8">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              PointerWheelChanged="OnZoomImage">
+                    <Image x:Name="FullImage"
+                           Source="../Assets/calendario.jpg"
+                           Stretch="Uniform"
+                           RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                        </Image.RenderTransform>
+                    </Image>
+                </ScrollViewer>
+            </Border>
+        </Grid>
     </Grid>
-
 </Window>
