@@ -50,7 +50,7 @@
             </Setter>
 
             <Style Selector="^:pointerover">
-                <Setter Property="Background" Value="{StaticResource HoverBlue}" />
+                <Setter Property="Background" Value="{StaticResource ElegantBlue}" />
                 <Setter Property="Cursor" Value="Hand" />
             </Style>
 
