@@ -64,30 +64,18 @@ public class ChecadorService
         _context.SaveChanges();
     }
 
-    /// <summary>
-    /// Determina si el próximo registro debe ser "Entrada" o "Salida" basado en el último registro de la persona
-    /// </summary>
-    /// <param name="personaId">ID de la persona</param>
-    /// <returns>"Entrada" si el último fue "Salida" o no hay registros, "Salida" si el último fue "Entrada"</returns>
     public string DeterminarTipoAccion(int personaId)
     {
         var ultimoChecador = ObtenerUltimoChecadorPorPersona(personaId);
         
-        // Si no hay registros previos o el último fue "Salida", el siguiente debe ser "Entrada"
         if (ultimoChecador == null || ultimoChecador.TipoAccion == "Salida")
         {
             return "Entrada";
         }
         
-        // Si el último fue "Entrada", el siguiente debe ser "Salida"
         return "Salida";
     }
 
-    /// <summary>
-    /// Registra un nuevo checador para una persona, determinando automáticamente el tipo de acción
-    /// </summary>
-    /// <param name="personaId">ID de la persona</param>
-    /// <returns>El checador creado</returns>
     public Checador RegistrarChecador(int personaId)
     {
         var tipoAccion = DeterminarTipoAccion(personaId);
@@ -103,9 +91,39 @@ public class ChecadorService
 
         AgregarChecador(nuevoChecador);
         
-        // Retornar el checador con la información de la persona cargada
         return _context.Checadores
             .Include(c => c.Persona)
             .FirstOrDefault(c => c.Id == nuevoChecador.Id);
+    }
+    
+    public List<Checador> ObtenerChecadoresPorRangoFecha(DateOnly fechaInicio, DateOnly fechaFin)
+    {
+        return _context.Checadores
+            .Include(c => c.Persona)
+            .Where(c => c.Fecha >= fechaInicio && c.Fecha <= fechaFin)
+            .OrderBy(c => c.Fecha)
+            .ThenBy(c => c.Persona.Nombre)
+            .ThenBy(c => c.Hora)
+            .AsNoTracking()
+            .ToList();
+    }
+
+    public List<Checador> ObtenerChecadoresPorRangoFechaYTipo(DateOnly fechaInicio, DateOnly fechaFin, string tipoPersona)
+    {
+        var query = _context.Checadores
+            .Include(c => c.Persona)
+            .Where(c => c.Fecha >= fechaInicio && c.Fecha <= fechaFin);
+    
+        if (!string.IsNullOrEmpty(tipoPersona) && tipoPersona != "Todos")
+        {
+            query = query.Where(c => c.Persona.TipoPersona == tipoPersona);
+        }
+    
+        return query
+            .OrderBy(c => c.Fecha)
+            .ThenBy(c => c.Persona.Nombre)
+            .ThenBy(c => c.Hora)
+            .AsNoTracking()
+            .ToList();
     }
 }
