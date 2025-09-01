@@ -3,18 +3,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ChecadorComunicacion.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="850"
              x:DataType="vm:ChecadorViewModel"
              x:Class="ChecadorComunicacion.Views.ChecadorView">
-    
+
     <UserControl.DataContext>
         <vm:ChecadorViewModel />
     </UserControl.DataContext>
-    
-    <!-- Contenedor principal con padding -->
+
     <StackPanel Margin="40" Spacing="30" HorizontalAlignment="Center">
 
-        <!-- Reloj digital -->
+        <!-- Reloj -->
         <Border Background="White"
                 CornerRadius="15"
                 Padding="40,20"
@@ -32,7 +31,7 @@
             </StackPanel>
         </Border>
 
-        <!-- Área de información de la persona -->
+        <!-- Panel principal -->
         <Border Background="White"
                 CornerRadius="15"
                 Padding="30"
@@ -40,100 +39,141 @@
                 MinWidth="400">
             <StackPanel Spacing="20" HorizontalAlignment="Center">
 
-                <!-- Placeholder circular para foto -->
-                <Border Width="120"
-                        Height="120"
-                        Background="#BDC3C7"
-                        CornerRadius="60"
-                        HorizontalAlignment="Center">
-                    <TextBlock Text="👤"
-                               FontSize="40"
-                               Foreground="White"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
-                </Border>
-
-                <!-- Información de la persona -->
-                <StackPanel Spacing="8" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding NombreCompleto}"
-                               FontSize="24"
-                               FontWeight="SemiBold"
-                               Foreground="#2C3E50"
-                               HorizontalAlignment="Center" />
-
-                    <TextBlock Text="{Binding Matricula}"
-                               FontSize="16"
-                               Foreground="#7F8C8D"
-                               HorizontalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Información del último checador -->
-                <Border Background="#ECF0F1"
-                        CornerRadius="10"
-                        Padding="20,15">
-                    <StackPanel Spacing="8">
-                        <TextBlock Text="Último registro:"
-                                   FontSize="14"
-                                   FontWeight="SemiBold"
-                                   Foreground="#34495E" />
-
-                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0"
-                                       Text="Fecha:"
-                                       FontSize="12"
-                                       Foreground="#7F8C8D"
-                                       Margin="0,0,10,0" />
-                            <TextBlock Grid.Row="0" Grid.Column="1"
-                                       Text="{Binding FechaUltimoChecador}"
-                                       FontSize="12"
-                                       Foreground="#2C3E50" />
-
-                            <TextBlock Grid.Row="1" Grid.Column="0"
-                                       Text="Hora:"
-                                       FontSize="12"
-                                       Foreground="#7F8C8D"
-                                       Margin="0,0,10,0" />
-                            <TextBlock Grid.Row="1" Grid.Column="1"
-                                       Text="{Binding HoraUltimoChecador}"
-                                       FontSize="12"
-                                       Foreground="#2C3E50" />
-
-                            <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="2"
-                                    Background="#3498DB"
-                                    CornerRadius="12"
-                                    Padding="12,6"
-                                    VerticalAlignment="Center">
-                                <TextBlock Text="{Binding TipoAccionAnterior}"
-                                           FontSize="12"
-                                           FontWeight="SemiBold"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center" />
-                            </Border>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <!-- Próxima acción -->
-                <StackPanel Spacing="10" HorizontalAlignment="Center">
-                    <TextBlock Text="Próxima acción:"
-                               FontSize="16"
+                <!-- Entrada de matrícula (siempre visible) -->
+                <StackPanel Spacing="15" HorizontalAlignment="Center">
+                    <TextBlock Text="Ingresa tu matrícula:"
+                               FontSize="18"
                                FontWeight="SemiBold"
                                Foreground="#34495E"
                                HorizontalAlignment="Center" />
 
-                    <Border Background="#E74C3C"
-                            CornerRadius="20"
-                            Padding="20,10">
-                        <TextBlock Text="{Binding ProximoTipoAccion}"
-                                   FontSize="18"
-                                   FontWeight="Bold"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center" />
+                    <Border Background="#ECF0F1"
+                            CornerRadius="25"
+                            Padding="20,15"
+                            BorderBrush="#BDC3C7"
+                            BorderThickness="2">
+                        <TextBox Name="MatriculaTextBox"
+                                 Text="{Binding MatriculaInput}"
+                                 Watermark="Escribe tu matrícula aquí"
+                                 Width="250"
+                                 FontSize="18"
+                                 HorizontalAlignment="Center"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 HorizontalContentAlignment="Center">
+                            <TextBox.KeyBindings>
+                                <KeyBinding Gesture="Enter" Command="{Binding ProcesarMatriculaCommand}" />
+                            </TextBox.KeyBindings>
+                        </TextBox>
                     </Border>
+
+                    <Button Content="Checar"
+                            Command="{Binding ProcesarMatriculaCommand}"
+                            Background="#3498DB"
+                            Foreground="White"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Padding="30,12"
+                            CornerRadius="25"
+                            HorizontalAlignment="Center" />
                 </StackPanel>
 
-                <!-- Botón de registrar -->
-                
+                <!-- Mensaje de estado -->
+                <TextBlock Text="{Binding MensajeEstado}"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Foreground="#E74C3C"
+                           HorizontalAlignment="Center"
+                           IsVisible="{Binding MensajeEstado, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+                <!-- Información de la persona (solo visible cuando se encuentra) -->
+                <StackPanel Spacing="20"
+                            HorizontalAlignment="Center"
+                            IsVisible="{Binding MostrarDatos}">
+
+                    <!-- Avatar y datos personales -->
+                    <StackPanel Spacing="15" HorizontalAlignment="Center">
+
+                        <!-- Imagen de la persona o placeholder -->
+                        <Border Width="120"
+                                Height="120"
+                                CornerRadius="60"
+                                BorderBrush="#27AE60"
+                                BorderThickness="3"
+                                HorizontalAlignment="Center"
+                                ClipToBounds="True">
+                            <Grid>
+                                <!-- Imagen cuando existe -->
+                                <Image Source="{Binding FotoPersona}"
+                                       Stretch="UniformToFill"
+                                       IsVisible="{Binding TieneFoto}" />
+
+                                <!-- Placeholder cuando no hay imagen -->
+                                <Border Background="#27AE60"
+                                        IsVisible="{Binding !TieneFoto}">
+                                    <Grid>
+                                        <!-- Icono de persona -->
+                                        <TextBlock Text="👤"
+                                                   FontSize="40"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+
+                                        <!-- Check mark superpuesto -->
+                                        <Border Background="#27AE60"
+                                                Width="35"
+                                                Height="35"
+                                                CornerRadius="17.5"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                Margin="0,0,5,5"
+                                                BorderBrush="White"
+                                                BorderThickness="2">
+                                            <TextBlock Text="✓"
+                                                       FontSize="16"
+                                                       Foreground="White"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold" />
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <Border
+                                    Width="35"
+                                    Height="35"
+                                    CornerRadius="17.5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Margin="0,0,5,5"
+                                    BorderBrush="White"
+                                    BorderThickness="2"
+                                    IsVisible="{Binding TieneFoto}">
+                                    <TextBlock Text="✓"
+                                               FontSize="16"
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold" />
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <StackPanel Spacing="8" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding NombreCompleto}"
+                                       FontSize="24"
+                                       FontWeight="SemiBold"
+                                       Foreground="#2C3E50"
+                                       HorizontalAlignment="Center" />
+
+                            <TextBlock Text="{Binding Matricula}"
+                                       FontSize="16"
+                                       Foreground="#7F8C8D"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
             </StackPanel>
         </Border>
     </StackPanel>
